@@ -50,7 +50,4 @@
        # ignore_failure true
         end
 
-    execute "wordpress-usergrant" do
-       command "mysql -u root -e  'GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO wordpress@localhost;'"
-       #ignore_failure true
-       end
+   
