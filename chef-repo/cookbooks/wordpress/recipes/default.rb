@@ -48,6 +48,13 @@ execute "get-wordpress" do
    # ignore_failure true
     end
 
+    execute "recursive permit2" do
+      command "sudo chmod -R 777 wordpress/"
+      cwd "/srv/www"
+     # ignore_failure true
+      end
+
+
   template '/etc/apache2/sites-available/wordpress.conf' do
         source 'wordpress.conf'
         notifies :restart, resources(:service => "apache2")
