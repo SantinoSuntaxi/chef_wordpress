@@ -32,6 +32,7 @@ execute "get-wordpress" do
    owner "www-data" 
    group "www-data"
    mode "0777"
+   recursive true
   end
 
   directory "/srv/www/wordpress" do
@@ -41,7 +42,11 @@ execute "get-wordpress" do
     recursive true
    end
 
-
+   execute "recursive permit" do
+    command "sudo chown -R www-data:www-data wordpress/"
+    cwd "/srv/www"
+   # ignore_failure true
+    end
 
   template '/etc/apache2/sites-available/wordpress.conf' do
         source 'wordpress.conf'
@@ -81,6 +86,7 @@ execute "get-wordpress" do
 
       execute "wordpress-usergrant" do
         command "mysql -u root -e  'GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO wordpress@localhost;'"
-        #ignore_failure true
+        ignore_failure true
         end
 
+  include_recipe '::facts'
